@@ -6,7 +6,8 @@
 |--|--|
 | **MCP** | `https://dayprotocol.com/mm/mcp` (open — no unlock token) |
 | **REST** | `https://dayprotocol.com/mm/v1` |
-| **Billing** | API/MCP calls are **free** right now |
+| **Telegram** | **[@daymmbot](https://t.me/daymmbot)** — full Maker MCP in chat |
+| **Billing** | API/MCP + Telegram messages are **free** right now (easy to enable) |
 
 ## Wallet modes
 
@@ -19,12 +20,33 @@ Maker has **two wallet modes** (pick what fits — not a ranking):
 
 → Full comparison: **[WALLET-MODES.md](./WALLET-MODES.md)**
 
+## Telegram bot
+
+Chat **[@daymmbot](https://t.me/daymmbot)** for the same Maker surface as MCP (plan, wallets, strategies, token intel).  
+Message fees default **off** (`TELEGRAM_MSG_FEE_SOL=0`). Ops: `GET /v1/fees`.
+
+## Fees & usage stats
+
+```bash
+# How to turn API (x402) + Telegram fees on/off
+curl -s https://dayprotocol.com/mm/v1/fees | jq .
+
+# Keys minted / active orgs / telegram users — counts only, NO key secrets
+curl -s https://dayprotocol.com/mm/v1/stats | jq .
+```
+
+| Env | Default | Effect |
+|--|--|--|
+| `X402_ENABLED` | `false` | `true` = pay-per-successful API/MCP call |
+| `X402_PRICE_USDC` / `X402_PRICE_SOL` | `0.01` / `0.0001` | Price when x402 on |
+| `TELEGRAM_MSG_FEE_SOL` | `0` | Per-message SOL fee for @daymmbot |
+
 ## Docs
 
 | Doc | |
 |--|--|
 | [Wallet modes](./WALLET-MODES.md) | External vs custodial — how each works |
-| [Getting started](./GETTING-STARTED.md) | Key → fund → strategy |
+| [Getting started](./GETTING-STARTED.md) | Key → fund → strategy (+ Telegram) |
 | [API reference](./API.md) | REST + MCP tools |
 | [Strategy templates](./TEMPLATES.md) | Catalog, venues, best-for |
 | [Concepts](./CONCEPTS.md) | Jobs, ranges, private drip, orchestrator |

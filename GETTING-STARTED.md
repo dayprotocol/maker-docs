@@ -7,6 +7,7 @@ Use **HTTPS REST** or **open MCP** with a long-lived API key (`mk_live_…`).
 |--|--|
 | MCP | `https://dayprotocol.com/mm/mcp` (no unlock token) |
 | REST | `https://dayprotocol.com/mm/v1` |
+| Telegram | **[@daymmbot](https://t.me/daymmbot)** |
 | Concepts | [CONCEPTS.md](./CONCEPTS.md) |
 | Templates | [TEMPLATES.md](./TEMPLATES.md) |
 | Full API | [API.md](./API.md) |
@@ -19,7 +20,10 @@ Full comparison → **[WALLET-MODES.md](./WALLET-MODES.md)**.
 | **External** | Stay with you | [§ External path](#external-path-i-only-sign) |
 | **Custodial** | Vaulted by Maker | [§ Custodial path](#3-create-worker-wallets) below |
 
-**Billing:** API/MCP calls are **FREE** right now.
+**Billing:** API/MCP calls and Telegram messages are **FREE** right now.  
+Turn fees on via env (`X402_ENABLED`, `TELEGRAM_MSG_FEE_SOL`) — see `GET /v1/fees`.
+
+**Telegram:** DM **[@daymmbot](https://t.me/daymmbot)** — it mints your org + API key on first chat and runs the full Maker tool catalog (confirm before mutates).
 
 ---
 
