@@ -37,9 +37,9 @@ curl -s https://dayprotocol.com/mm/v1/stats | jq .
 
 | Env | Default | Effect |
 |--|--|--|
-| `X402_ENABLED` | `false` | `true` = pay-per-successful API/MCP call |
-| `X402_PRICE_USDC` / `X402_PRICE_SOL` | `0.01` / `0.0001` | Price when x402 on |
-| `TELEGRAM_MSG_FEE_SOL` | `0` | Per-message SOL fee for @daymmbot |
+| `X402_ENABLED` | `false` | `true` = USDC pay-per-successful API/MCP call |
+| `X402_PRICE_USDC` | `0.01` | USDC price (Solana **and** Robinhood Chain) |
+| `TELEGRAM_MSG_FEE_USDC` | `0` | Per-message USDC fee for @daymmbot (prepaid credits) |
 
 ## Docs
 
