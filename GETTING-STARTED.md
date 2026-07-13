@@ -20,8 +20,8 @@ Full comparison → **[WALLET-MODES.md](./WALLET-MODES.md)**.
 | **External** | Stay with you | [§ External path](#external-path-i-only-sign) |
 | **Custodial** | Vaulted by Maker | [§ Custodial path](#3-create-worker-wallets) below |
 
-**Billing:** API/MCP calls and Telegram messages are **FREE** right now.  
-Turn fees on via env (`X402_ENABLED`, `TELEGRAM_MSG_FEE_SOL`) — see `GET /v1/fees`.
+**Billing:** API, MCP, and Telegram are **FREE right now** (no deposit, no per-call fee).  
+Optional later: USDC fees via `X402_ENABLED` / `TELEGRAM_MSG_FEE_USDC` — see `GET /v1/fees`.
 
 **Telegram:** DM **[@daymmbot](https://t.me/daymmbot)** — it mints your org + API key on first chat and runs the full Maker tool catalog (confirm before mutates).
 

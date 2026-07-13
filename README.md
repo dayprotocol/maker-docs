@@ -7,7 +7,7 @@
 | **MCP** | `https://dayprotocol.com/mm/mcp` (open — no unlock token) |
 | **REST** | `https://dayprotocol.com/mm/v1` |
 | **Telegram** | **[@daymmbot](https://t.me/daymmbot)** — full Maker MCP in chat |
-| **Billing** | API/MCP + Telegram messages are **free** right now (easy to enable) |
+| **Billing** | **FREE** right now (API, MCP, Telegram). Fees optional later via env. |
 
 ## Wallet modes
 
@@ -23,13 +23,16 @@ Maker has **two wallet modes** (pick what fits — not a ranking):
 ## Telegram bot
 
 Chat **[@daymmbot](https://t.me/daymmbot)** for the same Maker surface as MCP (plan, wallets, strategies, token intel).  
-Message fees default **off** (`TELEGRAM_MSG_FEE_SOL=0`). Ops: `GET /v1/fees`.
+
+**Everything is free right now** — no deposit, no per-call charge, no Telegram message fee.  
+Optional fees (USDC) can be turned on later by ops: `GET /v1/fees`.
 
 ## Fees & usage stats
 
 ```bash
-# How to turn API (x402) + Telegram fees on/off
+# Current pricing (should show free:true while X402 is off)
 curl -s https://dayprotocol.com/mm/v1/fees | jq .
+curl -s https://dayprotocol.com/mm/v1/x402/pricing | jq .
 
 # Keys minted / active orgs / telegram users — counts only, NO key secrets
 curl -s https://dayprotocol.com/mm/v1/stats | jq .
@@ -37,9 +40,9 @@ curl -s https://dayprotocol.com/mm/v1/stats | jq .
 
 | Env | Default | Effect |
 |--|--|--|
-| `X402_ENABLED` | `false` | `true` = USDC pay-per-successful API/MCP call |
-| `X402_PRICE_USDC` | `0.01` | USDC price (Solana **and** Robinhood Chain) |
-| `TELEGRAM_MSG_FEE_USDC` | `0` | Per-message USDC fee for @daymmbot (prepaid credits) |
+| `X402_ENABLED` | **`false` (FREE)** | `true` = USDC pay-per-successful API/MCP call |
+| `X402_PRICE_USDC` | `0.01` | Only used when x402 is on (Solana + Robinhood) |
+| `TELEGRAM_MSG_FEE_USDC` | **`0` (FREE)** | Per-message USDC fee for @daymmbot when >0 |
 
 ## Docs
 
