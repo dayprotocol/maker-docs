@@ -1,7 +1,7 @@
 # Maker — Getting started
 
 **Maker** is DAY Protocol’s Solana market-making API for agents.  
-Use **HTTPS REST** or **open MCP** with a long-lived API key (`mk_live_…`).
+Use **HTTPS REST** directly (curl, SDK, your agent) or **open MCP** / Telegram — same backend. API key: `mk_live_…`.
 
 | | |
 |--|--|

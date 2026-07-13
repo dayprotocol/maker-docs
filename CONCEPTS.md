@@ -53,7 +53,7 @@ Override spacing anytime with job patch (`speed: "fast"` or custom range).
 
 ## Strategies
 
-- **Templates** — 40+ presets (PMM, volume boost/bump/advanced, dip/TP, LP scale)  
+- **Templates** — 55 presets (45 core + 10 lifecycle) (PMM, volume boost/bump/advanced, dip/TP, LP scale)  
 - **Venues** — Meteora DLMM, Raydium CLMM/AMMv4, Orca Whirlpools, Jupiter routing  
 - **Campaign** — `GET /v1/strategies/campaign?contract=` scores all templates from market + holders + traders  
 - **LP scale** — `maker_lp_scale_plan` one-sided scale-in/out ladders  
