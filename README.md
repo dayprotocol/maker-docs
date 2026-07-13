@@ -2,28 +2,32 @@
 
 **Solana market-making API + MCP for agents.**
 
-Maker lets AI agents and developers:
-
-- Create custodial worker wallets (keys vaulted — never exported)
-- Deposit once and **stagger-fund** workers privately over time
-- Warm up wallets, run **40+ strategy templates**, volume bots, LP scale plans
-- Get **full token intel** (market + holders + traders) and a ranked strategy campaign
-- Operate everything over **HTTPS REST** or **open MCP**
-
 | | |
 |--|--|
 | **MCP** | `https://dayprotocol.com/mm/mcp` (open — no unlock token) |
 | **REST** | `https://dayprotocol.com/mm/v1` |
 | **Billing** | API/MCP calls are **free** right now |
 
+## Wallet modes
+
+Maker has **two wallet modes** (pick what fits — not a ranking):
+
+| Mode | Keys | You do | Maker does |
+|--|--|--|--|
+| **[External (BYO)](./WALLET-MODES.md#mode-a--external-bring-your-own-wallet)** | Stay with you | Sign txs | Build unsigned swap + relay |
+| **[Custodial (workers)](./WALLET-MODES.md#mode-b--custodial-maker-workers)** | Encrypted vault | Call API / confirm jobs | Fund, warmup, strategies, volume bots |
+
+→ Full comparison: **[WALLET-MODES.md](./WALLET-MODES.md)**
+
 ## Docs
 
 | Doc | |
 |--|--|
-| [Getting started](./GETTING-STARTED.md) | Create a key, fund, run a strategy |
-| [API reference](./API.md) | REST endpoints + MCP tools |
-| [Strategy templates](./TEMPLATES.md) | Full catalog with venues + best-for |
-| [Concepts](./CONCEPTS.md) | Custody, jobs, ranges, private funding |
+| [Wallet modes](./WALLET-MODES.md) | External vs custodial — how each works |
+| [Getting started](./GETTING-STARTED.md) | Key → fund → strategy |
+| [API reference](./API.md) | REST + MCP tools |
+| [Strategy templates](./TEMPLATES.md) | Catalog, venues, best-for |
+| [Concepts](./CONCEPTS.md) | Jobs, ranges, private drip, orchestrator |
 
 ## Quick start
 
@@ -33,26 +37,34 @@ curl -s -X POST https://dayprotocol.com/mm/v1/api-keys \
   -H 'content-type: application/json' \
   -d '{"label":"my-agent"}'
 
-# 2) List everything you can call
-curl -s https://dayprotocol.com/mm/v1/capabilities | jq '.api_calls | length'
+# 2) External mode — register your pubkey (you sign later)
+curl -s -X POST https://dayprotocol.com/mm/v1/wallets/external \
+  -H "Authorization: Bearer $MAKER_KEY" \
+  -H 'content-type: application/json' \
+  -d '{"pubkey":"<YOUR_PUBKEY>"}'
 
-# 3) Strategy guide + templates
+# 3) Or list capabilities / templates
+curl -s https://dayprotocol.com/mm/v1/capabilities | jq '.api_calls | length'
 curl -s https://dayprotocol.com/mm/v1/strategy-templates | jq '.templates | length'
 ```
 
-MCP clients: connect to `https://dayprotocol.com/mm/mcp` and pass `api_key` (`mk_live_…`) on org-scoped tools.
+MCP: connect to `https://dayprotocol.com/mm/mcp`. Pass `api_key` (`mk_live_…`) on org-scoped tools.
 
-## Custody model
+## What Maker can do
 
-**Default = custodial.** Maker mints worker keypairs and stores them encrypted. You operate via API/MCP only.  
-**No private key export.** Cash out with `maker_wallet_withdraw` / `POST /v1/wallets/withdraw` to *your* address.
+- **External trades** — build unsigned swap → you sign → submit  
+- **Custodial workers** — mint, vault, operate via API only (no key export)  
+- **Deposit once → staggered private fund drip** (random amounts, 1m–24h gaps)  
+- **40+ strategy templates** (PMM, volume boost/bump/advanced, dip/TP, LP scale)  
+- **Token intel + campaign** — market, holders, traders → ranked plan  
+- **Live job edit** — speed up drip, retune randomness after start  
+- **Telegram** `@daymmbot` — same tools, confirm-before-execute on money moves  
 
-Optional **BYO / external wallets**: register a pubkey, build an unsigned swap, you sign client-side.
+## Custody in one line
 
-## Telegram
-
-`@daymmbot` — same MCP tool surface, API key auto-linked on first DM, confirm-before-execute for money moves.
+- **External:** private key never touches Maker.  
+- **Custodial:** Maker holds worker keys in vault; **withdraw to your address only** — keys are never exported.
 
 ## Status
 
-Generated from production capabilities · 2026-07-13 UTC
+Public docs for the hosted API · [dayprotocol/maker-docs](https://github.com/dayprotocol/maker-docs)

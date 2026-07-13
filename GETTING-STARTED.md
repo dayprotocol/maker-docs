@@ -11,26 +11,36 @@ Use **HTTPS REST** or **open MCP** with a long-lived API key (`mk_live_…`).
 | Templates | [TEMPLATES.md](./TEMPLATES.md) |
 | Full API | [API.md](./API.md) |
 
-**Custody (default):** Maker **mints** worker wallets and **stores keys encrypted**. You operate them via API/MCP. **Private keys are never exported.** To pull SOL out, use **withdraw** to *your* address.
+**Wallet modes:** Maker supports **external (you sign)** and **custodial (Maker workers)**.  
+Full comparison → **[WALLET-MODES.md](./WALLET-MODES.md)**.
+
+| Mode | Keys | Start here |
+|--|--|--|
+| **External** | Stay with you | [§ External path](#external-path-i-only-sign) |
+| **Custodial** | Vaulted by Maker | [§ Custodial path](#3-create-worker-wallets) below |
+
+**Billing:** API/MCP calls are **FREE** right now.
 
 ---
 
 ## What you can do
 
-1. **Mint an API key** → that key *is* your account  
-2. **Open a funding session** → get a Solana deposit address  
-3. **Send SOL once** to that address  
-4. **Create custodial wallets** (keys vaulted; never exported)  
-5. **Fund workers** via private staggered drip (random amounts + random delays)  
-6. **Warm up** wallets (optional token list, or high-volume discovery)  
-7. **Run strategies** (40+ templates: PMM, volume boost/bump, dip/TP, LP scale, …)  
-8. **Token intel + campaign** — market, holders, traders → ranked strategy plan  
-9. **Buy / sell / patch / flatten** with **range** params `{ min, max }`  
-10. **Live-edit jobs** — speed up drip, retune randomness, change volume knobs  
-11. **Withdraw** SOL from workers to your own address  
-12. **List / cancel / poll jobs** — every action has progress + activity  
+**Either mode**
 
-**Billing:** API/MCP calls are **FREE** right now.
+1. **Mint an API key** → that key *is* your account (not a chain key)  
+2. **Token intel + campaign** — market, holders, traders → ranked strategy ideas  
+3. **List / cancel / poll jobs**  
+
+**External (BYO)**
+
+4. Register your pubkey → build unsigned swap → **you sign** → submit  
+
+**Custodial**
+
+5. Open funding session → deposit SOL once  
+6. Create workers → staggered private fund drip  
+7. Warmup + strategies / volume bots  
+8. Live-edit jobs · withdraw to *your* address (keys never exported)
 
 ---
 
@@ -66,7 +76,42 @@ If you lose the key, mint another under the same org (with a still-valid key) or
 
 ---
 
-## 2. Funding session (deposit once)
+## External path (“I only sign”)
+
+No deposit required for trading your own wallet. Maker never sees your private key.
+
+```bash
+# Register pubkey
+curl -s -X POST "$MAKER_API/wallets/external" \
+  -H "Authorization: Bearer $MAKER_KEY" \
+  -H 'content-type: application/json' \
+  -d '{"pubkey":"<YOUR_PUBKEY>","label":"main"}' | jq .
+
+# Build unsigned swap
+curl -s -X POST "$MAKER_API/trades/build" \
+  -H "Authorization: Bearer $MAKER_KEY" \
+  -H 'content-type: application/json' \
+  -d '{
+    "pubkey": "<YOUR_PUBKEY>",
+    "input_mint": "So11111111111111111111111111111111111111112",
+    "output_mint": "<TOKEN_MINT>",
+    "amount_sol": 0.05
+  }' | jq .
+# → unsigned_tx_base64, trade_id  — sign locally, then:
+
+curl -s -X POST "$MAKER_API/trades/<trade_id>/submit" \
+  -H "Authorization: Bearer $MAKER_KEY" \
+  -H 'content-type: application/json' \
+  -d '{"signed_tx_base64":"<SIGNED>"}' | jq .
+```
+
+MCP: `maker_external_wallet_register` → `maker_trade_build` → (sign) → `maker_trade_submit`.
+
+Details: [WALLET-MODES.md](./WALLET-MODES.md).
+
+---
+
+## 2. Funding session (deposit once) — custodial
 
 ```bash
 curl -s -X POST "$MAKER_API/funding/sessions" \

@@ -6,6 +6,7 @@ title: DAY Maker Docs
 
 Public API & MCP documentation.
 
+- [**Wallet modes**](./WALLET-MODES.md) — external (you sign) vs custodial (Maker workers)
 - [Getting started](./GETTING-STARTED.md)
 - [API reference](./API.md)
 - [Strategy templates](./TEMPLATES.md)

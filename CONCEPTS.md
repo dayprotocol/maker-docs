@@ -1,13 +1,17 @@
 # Maker concepts
 
-## Custody
+## Wallet modes
 
-| Mode | Keys | Use |
+Maker is not one-size-fits-all. See **[WALLET-MODES.md](./WALLET-MODES.md)** for the full distinction.
+
+| Mode | Who holds the private key | Typical use |
 |--|--|--|
-| **Custodial (default)** | Maker mints + encrypts in vault | Fund, warmup, strategies, withdraw to your address |
-| **External / BYO** | You keep keys | Register pubkey → build unsigned swap → you sign → submit |
+| **External (BYO)** | You — Maker only sees pubkey | “I only sign”: register → build unsigned tx → sign locally → submit |
+| **Custodial (workers)** | Maker vault (encrypted) | Automation: fund drip, warmup, strategies, multi-maker volume |
 
-Private keys are **never** returned by API or MCP.
+Private keys are **never exported** over API/MCP. Custodial cash-out is **withdraw to your address** only.
+
+You can use **both modes under one API key** (different wallets).
 
 ## API key = account
 
