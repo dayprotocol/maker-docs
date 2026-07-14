@@ -21,7 +21,7 @@ Full comparison → **[WALLET-MODES.md](./WALLET-MODES.md)**.
 | **Custodial** | Vaulted by Maker | [§ Custodial path](#3-create-worker-wallets) below |
 
 **Billing:** API, MCP, and Telegram are **FREE right now** (no deposit, no per-call fee).  
-Optional later: USDC fees via `X402_ENABLED` / `TELEGRAM_MSG_FEE_USDC` — see `GET /v1/fees`.
+**Live billing:** x402 **on** ($0.001 USDC/billable call). Discovery free. Telegram learning free; MM chat $0.001. See `GET /v1/fees` + `GET /v1/x402/pricing`.
 
 **Telegram:** DM **[@daymmbot](https://t.me/daymmbot)** — it mints your org + API key on first chat and runs the full Maker tool catalog (confirm before mutates).
 
